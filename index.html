@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>To Do App</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css">
+		<script type="text/javascript">
+			$(document).ready(function(){
+        let inValue;
+        $('#enterBtn').on('click', e => {
+          inValue = $('#enterTask').val();
+          if (inValue == '') {
+            $('#enterTask').focus();
+            return;
+          }else{
+            $('.todo-list').append('<li><span>'+inValue+'</span><span class="favorite glyphicon glyphicon-star"></span><span class="delete glyphicon glyphicon-remove"></span></li>');
+            $('#enterTask').val('');
+            $('#enterTask').focus();
+          }
+        });
+        $(document).on('click','.delete', function(e) {
+          $(this).parent().remove()
+        })
+        let favSplit;
+        var favv;
+        $(document).on('click','.todo-list .favorite', function() {
+          $('.fev-list').append($(this).parent());
+          favv = $(this).attr('class');
+          favSplit = favv.split(' ');
+          // console.log(favSplit[0])
+          $('.fev-list .'+favSplit[0]).css('color','#FFD842');
+        })
+        $(document).on('click','.fev-list .favorite',function(){
+          // console.log('fav already')
+          $(this).parent().remove()
+          $('.todo-list').append($(this).parent());
+          $('.todo-list .'+favSplit[0]).css('color','#ccc');
+        })
+			});
+		</script>
+		<style type="text/css">
+      .container{
+        margin-top: 10px;
+      }
+      ul{
+        padding-left: 0;
+      }
+      li{
+        list-style: none;
+        margin: 0 0 5px;
+        padding: 10px 8px;
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0px 1px 1px #ddd;
+      }
+      li span:nth-child(1){
+        width: 75%;
+        display: inline-block;
+      }
+      b{
+        font-size: 15px;
+        letter-spacing: 0.5px;
+      }
+      .form-control{
+        border-radius: 0;
+      }
+      .btn{
+        padding: 4px 18px;
+        border-radius: 0;
+      }
+      .delete, .favorite{
+        float: right;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 21px;
+      }
+      .favorite{
+        color: #ccc;
+      }
+      li .glyphicon:hover{
+        opacity: 0.7;
+      }
+      .todo-wrapper{
+        margin-top: 30px;
+      }
+      .mr-5{
+        margin-right: 5px;
+      }
+      .gray-star{
+        color: #ccc;
+        top: 2px;
+        font-size: 15px;
+      }
+      .gray-fav{
+        color: #FFD842;
+        top: 2px;
+        font-size: 15px;
+      }
+      @media only screen and (max-width: 550px){
+        .col-xs-6{
+          width: 100%;
+        }
+      }
+		</style>
+	</head>
+	<body>
+    <div class="container">
+      <label class="form-group">Enter Task Here: </label>
+      <input class="form-control form-group" type="text" id="enterTask">
+      <button id="enterBtn" class="btn btn-primary">ADD</button>
+      <div class="todo-wrapper row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <span class="mr-5 gray-star glyphicon glyphicon-star"></span><b>Tasks</b>
+          <ul class="todo-list"></ul>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <span class="mr-5 gray-fav glyphicon glyphicon-star"></span><b>Favourite Tasks</b>
+          <ul class="fev-list"></ul>
+        </div>
+      </div>
+    </div>
+	</body>
+</html>
